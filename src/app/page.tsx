@@ -1,145 +1,186 @@
-'use client';
+import Link from 'next/link'
+import { Moon, Star, Heart, Zap, Wind, BookOpen, Calendar, TrendingUp, MessageCircle, Brain, UserPlus, LogIn, Settings } from 'lucide-react'
 
-import { useState } from 'react';
-import { Moon, ChevronDown, Settings, Home, User, BarChart3 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
-export default function Page() {
-  const [currentScreen, setCurrentScreen] = useState('welcome');
-  const [showAdminMenu, setShowAdminMenu] = useState(false);
-
-  const navigateTo = (page: string) => {
-    setCurrentScreen(page);
-    setShowAdminMenu(false);
-  };
-
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'home':
-        return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Página Inicial</h2>
-            <p className="text-gray-600">Bem-vindo à sua jornada de sonhos tranquilos!</p>
-          </div>
-        );
-      case 'login':
-        return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Login</h2>
-            <p className="text-gray-600">Faça login para continuar.</p>
-          </div>
-        );
-      case 'admin':
-        return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Painel Admin</h2>
-            <p className="text-gray-600">Gerencie seu aplicativo aqui.</p>
-          </div>
-        );
-      case 'profile':
-        return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Perfil</h2>
-            <p className="text-gray-600">Veja e edite seu perfil.</p>
-          </div>
-        );
-      case 'analytics':
-        return (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Analytics</h2>
-            <p className="text-gray-600">Visualize estatísticas do app.</p>
-          </div>
-        );
-      default:
-        return (
-          <div className="text-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg shadow-yellow-500/30">
-              <Moon className="w-12 h-12 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">DreamEase</h1>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              Seu companheiro para noites tranquilas e sonhos doces. 
-              Encontre paz, relaxamento e melhor qualidade de sono.
-            </p>
-            <div className="space-y-4">
-              <Button
-                onClick={() => navigateTo('home')}
-                className="w-full bg-gradient-to-r from-yellow-500 to-yellow-700 hover:from-yellow-600 hover:to-yellow-800 text-white py-4 rounded-2xl shadow-lg shadow-yellow-500/30 text-lg font-semibold"
-              >
-                Começar Jornada 🌙
-              </Button>
-              <Button
-                onClick={() => navigateTo('login')}
-                variant="outline"
-                className="w-full border-yellow-400 text-yellow-700 hover:bg-yellow-50 py-4 rounded-2xl text-lg font-semibold"
-              >
-                Já tenho conta
-              </Button>
-            </div>
-          </div>
-        );
+export default function HomePage() {
+  const features = [
+    {
+      title: 'Onboarding',
+      description: 'Bem-vindo ao DreamEase - comece sua jornada',
+      icon: UserPlus,
+      href: '/onboarding',
+      color: 'from-blue-500 to-blue-700'
+    },
+    {
+      title: 'Ritual Noturno',
+      description: 'Prepare-se para uma noite tranquila',
+      icon: Moon,
+      href: '/ritual-noturno',
+      color: 'from-purple-500 to-purple-700'
+    },
+    {
+      title: 'Respiração Guiada',
+      description: 'Exercícios visuais de respiração',
+      icon: Wind,
+      href: '/respiracao-guiada',
+      color: 'from-green-500 to-green-700'
+    },
+    {
+      title: 'Sons para Dormir',
+      description: 'Biblioteca de sons relaxantes',
+      icon: Zap,
+      href: '/sons-dormir',
+      color: 'from-cyan-500 to-cyan-700'
+    },
+    {
+      title: 'Histórias para Dormir',
+      description: 'Contos encantadores antes de dormir',
+      icon: BookOpen,
+      href: '/historias-dormir',
+      color: 'from-pink-500 to-pink-700'
+    },
+    {
+      title: 'Check-in Emocional',
+      description: 'Acompanhe seu bem-estar diário',
+      icon: Heart,
+      href: '/checkin-emocional',
+      color: 'from-red-500 to-red-700'
+    },
+    {
+      title: 'Recomendações',
+      description: 'Conteúdo personalizado para você',
+      icon: Star,
+      href: '/recomendacoes',
+      color: 'from-yellow-500 to-yellow-700'
+    },
+    {
+      title: 'Progresso',
+      description: 'Acompanhe sua evolução',
+      icon: TrendingUp,
+      href: '/progresso',
+      color: 'from-indigo-500 to-indigo-700'
+    },
+    {
+      title: 'Chat de Suporte',
+      description: 'Ajuda profissional para ansiedade',
+      icon: MessageCircle,
+      href: '/chat-suporte',
+      color: 'from-orange-500 to-orange-700'
+    },
+    {
+      title: 'Técnicas de Relaxamento',
+      description: 'Ferramentas contra ansiedade',
+      icon: Brain,
+      href: '/tecnicas-relaxamento',
+      color: 'from-teal-500 to-teal-700'
     }
-  };
+  ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 flex items-center justify-center p-6 relative">
-      {/* Botão Admin no canto superior direito */}
-      <div className="absolute top-4 right-4 z-10">
-        <div className="relative">
-          <Button
-            onClick={() => setShowAdminMenu(!showAdminMenu)}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
-          >
-            <Settings className="w-4 h-4" />
-            Admin
-            <ChevronDown className="w-4 h-4" />
-          </Button>
-          
-          {showAdminMenu && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
-              <button
-                onClick={() => navigateTo('welcome')}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-yellow-50 flex items-center gap-2"
-              >
-                <Home className="w-4 h-4" />
-                Início
-              </button>
-              <button
-                onClick={() => navigateTo('home')}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-yellow-50 flex items-center gap-2"
-              >
-                <Home className="w-4 h-4" />
-                Página Inicial
-              </button>
-              <button
-                onClick={() => navigateTo('profile')}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-yellow-50 flex items-center gap-2"
-              >
-                <User className="w-4 h-4" />
-                Perfil
-              </button>
-              <button
-                onClick={() => navigateTo('analytics')}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-yellow-50 flex items-center gap-2"
-              >
-                <BarChart3 className="w-4 h-4" />
-                Analytics
-              </button>
-              <button
-                onClick={() => navigateTo('admin')}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-yellow-50 flex items-center gap-2"
-              >
-                <Settings className="w-4 h-4" />
-                Painel Admin
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Header */}
+      <header className="bg-white/90 backdrop-blur-sm border-b border-slate-200/50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-2">
+              <Moon className="w-8 h-8 text-slate-700" />
+              <span className="text-2xl font-bold text-slate-800">DreamEase</span>
+            </div>
+            <nav className="hidden md:flex space-x-6">
+              <Link href="/dashboard" className="text-slate-700 hover:text-slate-900 font-medium transition-colors">
+                Dashboard
+              </Link>
+              <Link href="/login" className="text-slate-700 hover:text-slate-900 font-medium transition-colors">
+                Login
+              </Link>
+              <Link href="/register" className="text-slate-700 hover:text-slate-900 font-medium transition-colors">
+                Registrar
+              </Link>
+              <Link href="/admin" className="text-slate-700 hover:text-slate-900 font-medium transition-colors">
+                Admin
+              </Link>
+            </nav>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button className="text-slate-700 hover:text-slate-900">
+                <Settings className="w-6 h-6" />
               </button>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-md w-full bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-yellow-200/50">
-        {renderScreen()}
-      </div>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <div className="w-20 h-20 bg-gradient-to-br from-slate-600 to-slate-800 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
+            <Moon className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold text-slate-900 mb-4">
+            Bem-vindo ao DreamEase
+          </h1>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Seu centro de controle para uma melhor qualidade de sono e bem-estar emocional.
+            Acesse todas as ferramentas e recursos em um só lugar.
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {features.map((feature, index) => {
+            const IconComponent = feature.icon
+            return (
+              <Link
+                key={index}
+                href={feature.href}
+                className="group bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:border-slate-300 transition-all duration-200 transform hover:-translate-y-1"
+              >
+                <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-lg mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}>
+                  <IconComponent className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-slate-700">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  {feature.description}
+                </p>
+              </Link>
+            )
+          })}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mt-12 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">Ações Rápidas</h2>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/dashboard"
+              className="bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors font-medium"
+            >
+              Ver Dashboard
+            </Link>
+            <Link
+              href="/login"
+              className="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium"
+            >
+              Fazer Login
+            </Link>
+            <Link
+              href="/register"
+              className="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium"
+            >
+              Criar Conta
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-300 py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p>&copy; 2024 DreamEase. Todos os direitos reservados.</p>
+        </div>
+      </footer>
     </div>
-  );
+  )
 }
